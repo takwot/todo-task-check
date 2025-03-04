@@ -1,0 +1,38 @@
+.container {
+  height: 40px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #121825bf;
+  border: 1px solid #313e62;
+  font-family: IBM Plex Sans;
+  font-weight: 500;
+  width: 200px;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #fff;
+  border-radius: 4px;
+  outline: none;
+}
+
+.content {
+  background: #121825;
+  border: 1px solid #313e62;
+  color: #fff;
+  font-family: IBM Plex Sans;
+  width: 200px;
+  border-radius: 0 0 12px 12px;
+}
+
+.item {
+  outline: none;
+  cursor: pointer;
+  padding: 16px;
+
+  &:hover {
+    background: #171f30;
+  }
+}

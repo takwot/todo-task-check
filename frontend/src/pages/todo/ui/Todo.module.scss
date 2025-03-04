@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 60px);
+  padding: 30px;
+
+  align-items: center;
+
+  .logout {
+    cursor: pointer;
+  }
+  .dataContainer {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .user {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    font-family: IBM Plex Sans;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23.4px;
+    letter-spacing: 0%;
+    color: #fff;
+  }
+}

@@ -1,0 +1,12 @@
+@use "./styles//reset.scss";
+@use "./styles/font.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #121825;
+  width: 100%;
+}
