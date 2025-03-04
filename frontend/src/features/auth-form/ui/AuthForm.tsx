@@ -3,7 +3,7 @@ import styles from "./AuthForm.module.scss";
 import { useTranslation } from "react-i18next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IAuthForm } from "../model/form.type";
-import { useLogin } from "../../../entities/user";
+import { useLogin, useRegister } from "../../../entities/user";
 import ChangeLanguage from "../../../shared/ui/ChangeLanguage/ChangeLanguage";
 
 export const AuthForm = () => {
@@ -11,16 +11,31 @@ export const AuthForm = () => {
 
   const [isLogin, setIsLogin] = useState(true);
 
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const registration = useRegister(setIsSuccess);
+
   const {
     register,
     formState: { isValid, errors },
     handleSubmit,
+    reset,
   } = useForm<IAuthForm>();
 
   const loginMutation = useLogin();
 
   const loginHandle: SubmitHandler<IAuthForm> = (data) => {
-    loginMutation.mutate({ email: data.email, password: data.password });
+    (isLogin ? loginMutation : registration).mutate({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (!isLogin) {
+      alert(isSuccess ? "Account created" : "Failed while creating account");
+      setIsLogin(true);
+    }
+
+    reset();
   };
 
   errors.email;

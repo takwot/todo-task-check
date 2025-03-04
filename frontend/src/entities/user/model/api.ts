@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiInstanse } from "../../../shared/api/backend";
 import { useUserStore } from "./store";
 import { useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 
 const loginHandle = async (email: string, password: string) => {
   const res = await apiInstanse.post(
@@ -13,6 +14,25 @@ const loginHandle = async (email: string, password: string) => {
   );
 
   return res.data;
+};
+
+const registerHandle = async (email: string, password: string) => {
+  const res = await apiInstanse.post("/auth/register", { email, password });
+
+  return res.data;
+};
+
+export const useRegister = (
+  setIsSuccess: Dispatch<SetStateAction<boolean>>
+) => {
+  return useMutation({
+    mutationFn: (data: { email: string; password: string }) =>
+      registerHandle(data.email, data.password),
+    onSuccess: () => {
+      setIsSuccess(true);
+      return true;
+    },
+  });
 };
 
 export const logoutHandle = async () => {
