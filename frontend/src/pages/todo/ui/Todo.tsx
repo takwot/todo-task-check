@@ -8,6 +8,7 @@ import Logout from "../../../shared/assets/logout.svg?react";
 
 import styles from "./Todo.module.scss";
 import ChangeLanguage from "../../../shared/ui/ChangeLanguage/ChangeLanguage";
+import { useNavigate } from "react-router-dom";
 
 export const Todo = () => {
   const { user, clearStore } = useUserStore();
@@ -16,9 +17,15 @@ export const Todo = () => {
 
   const logout = useLogout();
 
+  const router = useNavigate();
+
   useEffect(() => {
     if (!user) {
-      profile.mutateAsync();
+      try {
+        profile.mutateAsync();
+      } catch (e) {
+        router("/sign-in");
+      }
     }
   }, []);
 

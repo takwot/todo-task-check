@@ -26,10 +26,10 @@ export const AuthForm = () => {
   errors.email;
   return (
     <div className={styles.container}>
-      <p className={styles.authText}>Авторизация</p>
+      <p className={styles.authText}>{t(isLogin ? "login" : "register")}</p>
       <form onSubmit={handleSubmit(loginHandle)}>
         <div>
-          <label className={styles.text}>Почта</label>
+          <label className={styles.text}>{t("email")}</label>
           <input
             {...register("email")}
             type="email"
@@ -39,7 +39,7 @@ export const AuthForm = () => {
           />
         </div>
         <div>
-          <label className={styles.text}>Пароль</label>
+          <label className={styles.text}>{t("password")}</label>
           <input
             {...register("password", { min: 6 })}
             style={{
@@ -57,7 +57,7 @@ export const AuthForm = () => {
         style={{ cursor: "pointer" }}
         onClick={() => setIsLogin(!isLogin)}
       >
-        Нет аккаунта?
+        {t("no-acc")}
       </p>
       <ChangeLanguage />
     </div>

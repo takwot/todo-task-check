@@ -64,6 +64,7 @@ export const useMe = () => {
       }
     },
     onError: (error) => {
+      router("/sign-in");
       console.error("Login failed:", error);
     },
   });

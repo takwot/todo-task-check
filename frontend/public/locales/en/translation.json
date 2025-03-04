@@ -4,5 +4,8 @@
   "add-todo-name": "Enter the task name...",
   "add-todo-decs": "Enter a description of the task...",
   "add": "Save",
-  "change-language": "Change language"
+  "change-language": "Change language",
+  "email": "Email",
+  "password": "Password",
+  "no-acc": "No account?"
 }
