@@ -11,9 +11,7 @@ export const AuthForm = () => {
 
   const [isLogin, setIsLogin] = useState(true);
 
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const registration = useRegister(setIsSuccess);
+  const registration = useRegister();
 
   const {
     register,
@@ -29,16 +27,9 @@ export const AuthForm = () => {
       email: data.email,
       password: data.password,
     });
-
-    if (!isLogin) {
-      alert(isSuccess ? "Account created" : "Failed while creating account");
-      setIsLogin(true);
-    }
-
     reset();
   };
 
-  errors.email;
   return (
     <div className={styles.container}>
       <p className={styles.authText}>{t(isLogin ? "login" : "register")}</p>
@@ -51,11 +42,13 @@ export const AuthForm = () => {
             style={{
               borderColor: errors.email && "red",
             }}
+            autoComplete="off"
           />
         </div>
         <div>
           <label className={styles.text}>{t("password")}</label>
           <input
+            autoComplete="off"
             {...register("password", { min: 6 })}
             style={{
               borderColor: errors.password && "red",

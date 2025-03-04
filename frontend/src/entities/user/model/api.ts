@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { apiInstanse } from "../../../shared/api/backend";
 import { useUserStore } from "./store";
 import { useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction } from "react";
 
 const loginHandle = async (email: string, password: string) => {
   const res = await apiInstanse.post(
@@ -22,15 +21,19 @@ const registerHandle = async (email: string, password: string) => {
   return res.data;
 };
 
-export const useRegister = (
-  setIsSuccess: Dispatch<SetStateAction<boolean>>
-) => {
+export const useRegister = () => {
   return useMutation({
     mutationFn: (data: { email: string; password: string }) =>
       registerHandle(data.email, data.password),
-    onSuccess: () => {
-      setIsSuccess(true);
-      return true;
+    onSuccess: (data) => {
+      if (data.status) {
+        alert("Success! Login into your account");
+        return true;
+      }
+    },
+    onError: (error) => {
+      alert("Error while creating user");
+      throw new Error(error.message);
     },
   });
 };
@@ -64,7 +67,7 @@ export const useLogout = () => {
       }
     },
     onError: (error) => {
-      console.error("Login failed:", error);
+      throw new Error(error.message);
     },
   });
 };
@@ -104,8 +107,8 @@ export const useLogin = () => {
         router("/");
       }
     },
-    onError: (error) => {
-      console.error("Login failed:", error);
+    onError: () => {
+      alert("Login error");
     },
   });
 };

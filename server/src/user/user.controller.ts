@@ -19,6 +19,7 @@ export class UserController {
 
   @Post('register')
   register(@Body() body: RegisterDto) {
+    console.log(body);
     return this.userService.register(body.email, body.password);
   }
 

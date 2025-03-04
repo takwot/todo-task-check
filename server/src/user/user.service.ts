@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { JwtService } from '@nestjs/jwt';
@@ -19,20 +23,20 @@ export class UserService {
   async register(email: string, password: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      await this.prisma.user.create({
+      const user = await this.prisma.user.create({
         data: {
           email,
           password: hashedPassword,
         },
       });
 
+      console.log(user);
+
       return {
         status: true,
       };
     } catch {
-      return {
-        status: false,
-      };
+      throw new BadRequestException('Error');
     }
   }
 
@@ -58,10 +62,12 @@ export class UserService {
     console.log(session);
 
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    return res.send({
-      status: true,
-      user: session.user,
-    });
+    return res
+      .send({
+        status: true,
+        user: session.user,
+      })
+      .status(200);
   }
 
   async logout(res: Response, req: Request) {
@@ -69,9 +75,11 @@ export class UserService {
 
     session.destroy();
 
-    return res.send({
-      status: true,
-    });
+    return res
+      .send({
+        status: true,
+      })
+      .status(200);
   }
 
   async me(req: Request, res: Response) {
@@ -80,14 +88,18 @@ export class UserService {
     console.log('request', session);
 
     if (!session.user) {
-      return res.send({
-        status: false,
-      });
+      return res
+        .send({
+          status: false,
+        })
+        .status(200);
     }
 
-    return res.send({
-      status: true,
-      email: session.user?.email,
-    });
+    return res
+      .send({
+        status: true,
+        email: session.user?.email,
+      })
+      .status(200);
   }
 }
